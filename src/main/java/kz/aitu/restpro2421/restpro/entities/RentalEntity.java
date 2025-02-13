@@ -3,17 +3,20 @@ package kz.aitu.restpro2421.restpro.entities;
 import java.util.Objects;
 
 public class RentalEntity {
-    private String id;
+    public RentalEntity() {
+    }
 
-    public RentalEntity(String id) {
+    private long id;
+
+    public RentalEntity(long id) {
         this.id = id;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -27,7 +30,7 @@ public class RentalEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RentalEntity that = (RentalEntity) o;
-        return Objects.equals(id, that.id);
+        return id == that.id;
     }
 
     @Override

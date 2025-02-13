@@ -8,12 +8,11 @@ import java.sql.Connection;
 import java.util.List;
 
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/Customer")
 public class MyController {
 
     private final DbConnection dbConnection = new DbConnection();
-
-    @GetMapping
+    @GetMapping("/getCustomer")
     public List<Customer> getAllCustomers() {
         try (Connection con = dbConnection.connect()) {
             return dbConnection.getAllCustomers();
@@ -22,13 +21,24 @@ public class MyController {
         }
     }
 
-    @PostMapping
-    public Customer createCustomer(@RequestBody Customer customer) {
-        try (Connection con = dbConnection.connect()) {
+    @PostMapping("/create")
+    public String createCustomer(@RequestBody Customer customer) {
+        try {
             dbConnection.createCustomer(customer);
-            return customer;
+            return "Customer created successfully with ID: " + customer.getId();
         } catch (Exception e) {
-            throw new RuntimeException("Error creating customer", e);
+            return "Error creating customer: " + e.getMessage();
         }
     }
+
+
+
+    public MyController() {
+        try {
+            dbConnection.createTables();
+        } catch (Exception e) {
+            throw new RuntimeException("Error creating tables", e);
+        }
+    }
+
 }

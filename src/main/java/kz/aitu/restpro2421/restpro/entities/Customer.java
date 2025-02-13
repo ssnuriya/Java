@@ -1,12 +1,18 @@
 package kz.aitu.restpro2421.restpro.entities;
 
-import kz.aitu.restpro2421.restpro.entities.RentalEntity;
-
 public class Customer extends RentalEntity {
+    public Customer() {
+    }
     private String name;
     private String phone;
 
-    public Customer(String id, String name, String phone) {
+    public Customer(String name, String phone) {
+        super(0);
+        this.name = name;
+        this.phone = phone;
+    }
+
+    public Customer(long id, String name, String phone) {
         super(id);
         this.name = name;
         this.phone = phone;

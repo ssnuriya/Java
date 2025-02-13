@@ -8,7 +8,7 @@ import java.util.List;
 public class DbConnection {
     private String URL = "jdbc:postgresql://localhost:5432/Rental";
     private String USER = "postgres";
-    private String PASSWORD = "7518";
+    private String PASSWORD = "7518lan";
 
     public Connection connect() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
@@ -36,7 +36,7 @@ public class DbConnection {
 
             while (rs.next()) {
                 customers.add(new Customer(
-                        rs.getString("id"),
+                        rs.getLong("id"),
                         rs.getString("name"),
                         rs.getString("phone")
                 ));
@@ -45,9 +45,12 @@ public class DbConnection {
         return customers;
     }
 
+
     public void createCustomer(Customer customer) throws SQLException {
         try (Connection conn = connect();
-             PreparedStatement stmt = conn.prepareStatement("INSERT INTO customers (name, phone) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement stmt = conn.prepareStatement(
+                     "INSERT INTO customers (name, phone) VALUES (?, ?)",
+                     Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setString(1, customer.getName());
             stmt.setString(2, customer.getPhone());
@@ -55,9 +58,10 @@ public class DbConnection {
 
             try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
-                    customer.setId(generatedKeys.getString(1));
+                    customer.setId(generatedKeys.getLong(1));
                 }
             }
         }
     }
+
 }

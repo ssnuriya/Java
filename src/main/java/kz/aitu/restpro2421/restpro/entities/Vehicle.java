@@ -5,8 +5,8 @@ public class Vehicle extends RentalEntity {
     private String model;
     private double pricePerDay;
 
-    public Vehicle(String id, String model, double pricePerDay) {
-        super(id);
+    public Vehicle(long id, String model, double pricePerDay) {
+        super(0);
         this.model = model;
         this.pricePerDay = pricePerDay;
     }
